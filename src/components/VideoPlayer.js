@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { FaPlay, FaPause } from "react-icons/fa6";
-import video from "../video.mp4";
 
-const VideoPlayer = () => {
+const VideoPlayer = ({video}) => {
+    console.log(video);
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -10,40 +10,47 @@ const VideoPlayer = () => {
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
   useEffect(() => {
-    const video = videoRef.current;
+    const videoElement = videoRef.current;
 
     const handleTimeUpdate = () => {
-      setCurrentTime(video.currentTime);
+      setCurrentTime(videoElement.currentTime);
     };
 
     const handleLoadedMetadata = () => {
-      setDuration(video.duration);
+      setDuration(videoElement.duration);
     };
 
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    videoElement.addEventListener("timeupdate", handleTimeUpdate);
+    videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
 
     return () => {
-      video.removeEventListener("timeupdate", handleTimeUpdate);
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      videoElement.removeEventListener("timeupdate", handleTimeUpdate);
+      videoElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
     };
   }, []);
 
+  useEffect(() => {
+    if (video) {
+      videoRef.current.src = video.source;
+      setIsPlaying(false);
+    }
+  }, [video]);
+
   const handlePlayPause = () => {
-    const video = videoRef.current;
+    const videoElement = videoRef.current;
     if (isPlaying) {
-      video.pause();
+      videoElement.pause();
     } else {
-      video.play();
+      videoElement.play();
     }
     setIsPlaying(!isPlaying);
   };
 
   const handleSeek = (event) => {
-    const video = videoRef.current;
+    const videoElement = videoRef.current;
     const { duration } = video;
     const seekTime = (event.target.value / 100) * duration;
-    video.currentTime = seekTime;
+    videoElement.currentTime = seekTime;
     setCurrentTime(seekTime);
   };
 
@@ -62,12 +69,10 @@ const VideoPlayer = () => {
   };
 
   return (
-    <div className="relative w-9/12">
+    <div className="relative w-9/12 m-10">
       <video
         ref={videoRef}
         className=" w-full rounded-xl"
-        src={video}
-        autoPlay
       ></video>
       <div
         className="w-full h-[60px] absolute left-0 bottom-0 flex px-2 items-center justify-between rounded-xl mt-4 "
