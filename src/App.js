@@ -1,9 +1,9 @@
-import './App.css';
+import VideoPlayer from "./components/VideoPlayer";
 
 function App() {
   return (
-    <div className="App">
-      Hello world
+    <div className="bg-slate-800 h-[100vh] p-10">
+      <VideoPlayer/>
     </div>
   );
 }
