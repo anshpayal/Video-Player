@@ -1,20 +1,16 @@
-import VideoPlayer from "./components/VideoPlayer";
 import React, { useState } from "react";
+import VideoPlayer from "./components/VideoPlayer";
 import Playlist from "./components/Playlist";
-import video1 from "./video.mp4"
-import video2 from  "./video2.mp4"
+import videos from "./utils/videoData";
 
 function App() {
-  const [currentVideo, setCurrentVideo] = useState(null);
-  const videos = [
-    { title: "Video 1", source: video1 },
-    { title: "Video 2", source: video2 },
-  ];
+  const [currentVideo, setCurrentVideo] = useState(videos[1]);
+  console.log(videos);
 
   return (
     <div className="bg-slate-800 h-[100vh] flex justify-between">
       <VideoPlayer video={currentVideo} />
-      <Playlist videos={videos} setCurrentVideo={setCurrentVideo}/>
+      <Playlist videos={videos} setCurrentVideo={setCurrentVideo} />
     </div>
   );
 }
