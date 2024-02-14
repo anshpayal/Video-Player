@@ -1,9 +1,19 @@
 ## Video Player:
+A Video Player application using React.js to allow users to play videos from a playlist. The app  supports features like seeking, timer, autoplay, and speed selector. Additionally, users should be able to reorder the playlist.
 
-- Objective: 
-Create a Video Player application using React.js or Next.js to allow users to play videos from a playlist. The app should support features like seeking, timer, autoplay, and speed selector. Additionally, users should be able to reorder the playlist.
+## Features: 
+- **Video Player component:** 
+    - [x] Play/pause toggle. 
+    - [x] Seek functionality. 
+    - [x] Timer displaying current playback time and duration.
+    - [x] Speed selector for playback speed adjustment.
+- **Playlist component:** 
+    - [x] Manage videos.
+    - [x] Allow user to reorder videos in playlist. 
+    - [x] Clicking on a video in the playlist, play that video on player.
+- **Additional features:** 
+    - [x] Fullscreen mode.
+    - [x] Volume control.
+    - [x] Thumbnail previews.
+    - [x] Search Functionality.
 
-- Features: 
-    - [x] **Video Player component** with play/pause toggle, seek functionality, Timer displaying current playback time and duration, speed selector for playback speed adjustment.
-    - [x] **Playlist component** can manage videos, allow user to reorder videos in playlist and on clicking on a video in the playlist it play that video on player.
-    - [x] **Additional features** fullscreen mode, volume control, thumbnail previews.
