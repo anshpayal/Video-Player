@@ -16,4 +16,5 @@ A Video Player application using React.js to allow users to play videos from a p
     - [x] Volume control.
     - [x] Thumbnail previews.
     - [x] Search Functionality.
+    - [x] Responsive.
 
