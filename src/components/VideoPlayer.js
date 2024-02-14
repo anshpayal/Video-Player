@@ -3,7 +3,7 @@ import { FaPlay, FaPause, FaCompress, FaExpand } from "react-icons/fa6";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
 const VideoPlayer = ({ video }) => {
-  console.log(video);
+  //console.log(video);
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);

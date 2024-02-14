@@ -5,7 +5,7 @@ import videos from "./utils/videoData";
 
 function App() {
   const [currentVideo, setCurrentVideo] = useState(videos[1]);
-  console.log(videos);
+  //console.log(videos);
 
   return (
     <div className="bg-slate-800 h-[100vh] flex justify-between">
