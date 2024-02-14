@@ -18,3 +18,4 @@ A Video Player application using React.js to allow users to play videos from a p
     - [x] Search Functionality.
     - [x] Responsive.
 
+- **DEPLOYMENT LINK:** `https://video-player-blond.vercel.app/`
