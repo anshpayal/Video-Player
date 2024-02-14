@@ -8,7 +8,7 @@ function App() {
   //console.log(videos);
 
   return (
-    <div className="bg-slate-800 h-[100vh] flex justify-between">
+    <div className="sm:flex">
       <VideoPlayer video={currentVideo} />
       <Playlist videos={videos} setCurrentVideo={setCurrentVideo} />
     </div>

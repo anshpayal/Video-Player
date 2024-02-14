@@ -8,7 +8,6 @@ const Playlist = ({ videos, setCurrentVideo }) => {
   const [playlist, setPlaylist] = useState(videos);
   const [searchText, setSearchText] = useState();
 
-  console.log(playlist);
 
   const handleVideoClick = (video) => {
     setCurrentVideo(video);
@@ -45,16 +44,16 @@ const Playlist = ({ videos, setCurrentVideo }) => {
     if(!searchText){
       setPlaylist(originalPlayList);
     }
-  },[searchText,originalPlayList]);
+  },[searchText]);
 
   return (
-    <div className="bg-slate-900 w-2/12 px-2 ">
-      <h1 className="text-2xl text-white font-bold text-center mt-10 font-mono">
+    <div className="bg-slate-900 sm:w-3/12 h-[100vh] p-2 ">
+      <h1 className="text-xl  sm:text-2xl text-white font-bold text-center mt-12 font-mono">
         Video Playlist
       </h1>
-      <div className="flex mx-auto items-center w-11/12">
+      <div className=" flex items-center justify-center p-2 my-3">
         <input
-          className=" focus:outline-none border border-solid border-gray-300 py-1 px-3 my-3 rounded-l-full"
+          className=" focus:outline-none border border-solid w-full border-gray-300 py-1 px-3 my-3 rounded-l-full"
           placeholder="Search from Playlist"
           value={searchText}
           onChange={handleInputText}

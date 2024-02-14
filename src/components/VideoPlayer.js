@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import logo from "../VideoPlayerLogo.png";
 import { FaPlay, FaPause, FaCompress, FaExpand } from "react-icons/fa6";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
@@ -13,7 +14,6 @@ const VideoPlayer = ({ video }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(1);
-  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -105,57 +105,75 @@ const VideoPlayer = ({ video }) => {
   };
 
   return (
-    <div className="relative w-9/12 m-10">
-      {!isPlaying && <img className=" absolute w-full max-h-[90vh] rounded-xl" src={video.thumb} alt="thumbnail" />}
-      <video ref={videoRef} className=" w-full rounded-xl"></video>
-      <div className="absolute top-0 right-0 p-4">
-        <button onClick={toggleMute} className="text-white text-xl mr-2">
-          {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
-        </button>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.1"
-          value={volume}
-          onChange={handleVolumeChange}
-          className="vertical-slider mx-2"
-        />
+    <div className="bg-slate-800 w-full pb-5">
+      <div className="bg-slate-800 mb-3">
+        <img className=" w-[250px] mx-auto sm:w-[350px] sm:mx-5 sm:my-4" src={logo} alt="logo" />
       </div>
-      <div
-        className="w-full h-[60px] absolute left-0 bottom-0 flex px-2 items-center justify-between rounded-xl mt-4 "
-        style={{
-          background: "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,1.5))",
-        }}
-      >
-        <button className="text-white text-2xl mx-4 " onClick={handlePlayPause}>
-          {isPlaying ? <FaPause /> : <FaPlay />}
-        </button>
-        <input
-          className="w-full"
-          type="range"
-          min="0"
-          max="100"
-          value={(currentTime / duration) * 100 || 0}
-          onChange={handleSeek}
-        />
-        <div className="text-white font-semibold w-32 mx-4 ">{`${formatTime(
-          currentTime
-        )} / ${formatTime(duration)}`}</div>
-        <select
-          className="rounded-md px-1 mx-4 text-center"
-          value={playbackSpeed}
-          onChange={handleSpeedChange}
+      <div className="relative w-11/12 mx-auto sm:w-9/12 sm:mx-10">
+        {!isPlaying && (
+          <img
+            className=" absolute w-full h-full rounded-xl"
+            src={video.thumb}
+            alt="thumbnail"
+          />
+        )}
+        <video ref={videoRef} className=" w-full rounded-xl"></video>
+        <div className="absolute top-0 right-0 p-4 flex items-center">
+          <button onClick={toggleMute} className="text-white sm:text-xl mr-2">
+            {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+          </button>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="vertical-slider sm:mx-2 h-1"
+          />
+        </div>
+        <div
+          className="w-full h-10 sm:h-[60px] absolute left-0 bottom-0 flex px-2 items-center justify-between rounded-xl mt-4 "
+          style={{
+            background: "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,1.5))",
+          }}
         >
-          <option value="0.5">0.5x</option>
-          <option value="1">1x</option>
-          <option value="1.5">1.5x</option>
-          <option value="2">2x</option>
-        </select>
-        <button onClick={toggleFullscreen} className="text-white text-xl mx-4">
-          {isFullscreen ? <FaCompress /> : <FaExpand />}
-        </button>
+          <button
+            className="text-white mx-1 sm:text-2xl sm:mx-4 "
+            onClick={handlePlayPause}
+          >
+            {isPlaying ? <FaPause /> : <FaPlay />}
+          </button>
+          <input
+            className="w-full h-1"
+            type="range"
+            min="0"
+            max="100"
+            value={(currentTime / duration) * 100 || 0}
+            onChange={handleSeek}
+          />
+          <div className="text-white text-[11px] font-semibold w-44 mx-1 sm:text-lg  sm:mx-4 text-center ">{`${formatTime(
+            currentTime
+          )} / ${formatTime(duration)}`}</div>
+          <select
+            className="rounded-md px-1 text-[11px] sm:text-lg sm:mx-4 text-center"
+            value={playbackSpeed}
+            onChange={handleSpeedChange}
+          >
+            <option value="0.5">0.5x</option>
+            <option value="1">1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+          <button
+            onClick={toggleFullscreen}
+            className="text-white sm:text-xl mx-2 sm:mx-4"
+          >
+            {isFullscreen ? <FaCompress /> : <FaExpand />}
+          </button>
+        </div>
       </div>
+      <h1 className="text-center sm:text-left text-2xl mx-10 my-3 font-mono text-white font-semibold">{video.title}</h1>
     </div>
   );
 };
