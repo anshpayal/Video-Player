@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import logo from "../VideoPlayerLogo.png";
 import { FaPlay, FaPause, FaCompress, FaExpand } from "react-icons/fa6";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
@@ -37,7 +36,7 @@ const VideoPlayer = ({ video }) => {
 
   useEffect(() => {
     if (video) {
-      videoRef.current.src = video.source;
+      videoRef.current.src = video.sources;
       setIsPlaying(false);
     }
   }, [video]);
@@ -105,11 +104,9 @@ const VideoPlayer = ({ video }) => {
   };
 
   return (
-    <div className="bg-slate-800 w-full pb-5">
-      <div className="bg-slate-800 mb-3">
-        <img className=" w-[250px] mx-auto sm:w-[350px] sm:mx-5 sm:my-4" src={logo} alt="logo" />
-      </div>
-      <div className="relative w-11/12 mx-auto sm:w-9/12 sm:mx-10">
+    <div className="bg-slate-800 w-full">
+      <h1 className="text-white text-xl sm:text-2xl font-semibold mx-5 sm:mx-10 my-5 font-mono">Now Playing</h1>
+      <div className="relative w-11/12 mx-auto sm:w-9/12 sm:mx-10 my-4">
         {!isPlaying && (
           <img
             className=" absolute w-full h-full rounded-xl"
@@ -117,7 +114,7 @@ const VideoPlayer = ({ video }) => {
             alt="thumbnail"
           />
         )}
-        <video ref={videoRef} className=" w-full rounded-xl"></video>
+        <video ref={videoRef}  className=" w-full rounded-xl"></video>
         <div className="absolute top-0 right-0 p-4 flex items-center">
           <button onClick={toggleMute} className="text-white sm:text-xl mr-2">
             {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
@@ -173,7 +170,9 @@ const VideoPlayer = ({ video }) => {
           </button>
         </div>
       </div>
-      <h1 className="text-center sm:text-left text-2xl mx-10 my-3 font-mono text-white font-semibold">{video.title}</h1>
+      <h1 className="text-center sm:text-left  text-2xl sm:mx-10 my-3 font-mono text-white font-semibold">{video.title} - {video.subtitle}</h1>
+      <h3 className="text-center sm:text-left text-xl sm:mx-10 my-3 font-mono text-white font-semibold">Video Description</h3>
+      <p className="text-center  sm:text-left sm:mx-10 my-3 font-mono text-gray-400 font-semibold">{video.description}</p>
     </div>
   );
 };

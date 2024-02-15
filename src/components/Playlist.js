@@ -8,7 +8,6 @@ const Playlist = ({ videos, setCurrentVideo }) => {
   const [playlist, setPlaylist] = useState(videos);
   const [searchText, setSearchText] = useState();
 
-
   const handleVideoClick = (video) => {
     setCurrentVideo(video);
   };
@@ -27,28 +26,28 @@ const Playlist = ({ videos, setCurrentVideo }) => {
     const [draggedItem] = newPlaylist.splice(dragIndex, 1);
     newPlaylist.splice(index, 0, draggedItem);
     setPlaylist(newPlaylist);
-  }; 
+  };
 
-  const handleInputText = (e)=>{
+  const handleInputText = (e) => {
     setSearchText(e.target.value);
-  }
+  };
 
-  const handleSearchBtnClick = ()=>{
-    const searchedVideo = playlist.filter((video)=>{
+  const handleSearchBtnClick = () => {
+    const searchedVideo = playlist.filter((video) => {
       return video.title.toLowerCase().includes(searchText.toLowerCase());
     });
-    setPlaylist(searchText ? searchedVideo:originalPlayList);
-  }
+    setPlaylist(searchText ? searchedVideo : originalPlayList);
+  };
 
-  useEffect(()=>{
-    if(!searchText){
+  useEffect(() => {
+    if (!searchText) {
       setPlaylist(originalPlayList);
     }
-  },[searchText]);
+  }, [searchText]);
 
   return (
-    <div className="bg-slate-900 sm:w-3/12 h-[100vh] p-2 ">
-      <h1 className="text-xl  sm:text-2xl text-white font-bold text-center mt-12 font-mono">
+    <div className=" bg-slate-800 border-t-2 sm:border-l-2 border-slate-900 sm:w-4/12  p-2 overflow-y-auto ">
+      <h1 className="text-xl sm:text-2xl text-white font-bold text-center mt-2 font-mono">
         Video Playlist
       </h1>
       <div className=" flex items-center justify-center p-2 my-3">
@@ -58,29 +57,33 @@ const Playlist = ({ videos, setCurrentVideo }) => {
           value={searchText}
           onChange={handleInputText}
         ></input>
-        <button className="bg-gray-300 py-2 px-3 text-lg rounded-r-full hover:bg-gray-200" onClick={handleSearchBtnClick}>
+        <button
+          className="bg-gray-300 py-2 px-3 text-lg rounded-r-full hover:bg-gray-200"
+          onClick={handleSearchBtnClick}
+        >
           <FaSearch />
         </button>
       </div>
-      {playlist.map((video, index) => (
-        <div
-          key={index}
-          className="playlist-item"
-          onClick={() => handleVideoClick(video)}
-          draggable
-          onDragStart={handleDragStart(index)}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop(index)}
-        >
-          <div className="p-2 m-3 font-mono font-semibold bg-slate-500 rounded-lg flex items-center hover:bg-slate-300">
-            {" "}
-            <span className="mx-4">
-              <FaVideo />
-            </span>
-            {video.title}
+      <div className="">
+        {playlist.map((video, index) => (
+          <div
+            key={index}
+            onClick={() => handleVideoClick(video)}
+            draggable
+            onDragStart={handleDragStart(index)}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop(index)}
+          >
+            <div className="p-2 m-3 font-mono font-semibold bg-slate-500 rounded-lg flex items-center hover:bg-slate-300 truncate">
+              {" "}
+              <span className="mx-4">
+                <FaVideo />
+              </span>
+              {video.title}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
