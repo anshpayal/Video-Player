@@ -41,6 +41,30 @@ const VideoPlayer = ({ video }) => {
     }
   }, [video]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      switch (event.keyCode) {
+        case 32: 
+          handlePlayPause();
+          break;
+        case 70: 
+          toggleFullscreen();
+          break;
+        case 77: 
+          toggleMute();
+          break;
+        default:
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  });
+
   const handlePlayPause = () => {
     const videoElement = videoRef.current;
     if (isPlaying) {
