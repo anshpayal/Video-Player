@@ -12,7 +12,7 @@ function App() {
     <div className="bg-slate-800">
       <div className="bg-slate-900">
         <img
-          className=" w-[120px] mx-auto sm:w-[130px] sm:mx-8 sm:py-2"
+          className=" w-[120px] mx-auto sm:w-[130px] sm:mx-8 py-2"
           src={logo}
           alt="logo"
         />

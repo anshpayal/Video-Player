@@ -77,10 +77,17 @@ const VideoPlayer = ({ video }) => {
 
   const handleSeek = (event) => {
     const videoElement = videoRef.current;
-    const { duration } = video;
-    const seekTime = (event.target.value / 100) * duration;
-    videoElement.currentTime = seekTime;
-    setCurrentTime(seekTime);
+    const seekable = videoElement.seekable;
+  
+    if (seekable && seekable.length > 0) {
+      const value = parseFloat(event.target.value);
+      const seekTime = (value / 100) * seekable.end(0);
+  
+      videoElement.currentTime = seekTime;
+      setCurrentTime(seekTime);
+    } else {
+      console.error('Seeking is not currently allowed');
+    }
   };
 
   const handleSpeedChange = (event) => {
