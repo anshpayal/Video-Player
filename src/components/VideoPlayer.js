@@ -1,79 +1,40 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState} from "react";
 import { FaPlay, FaPause, FaCompress, FaExpand } from "react-icons/fa6";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import useVideoState from "../utils/useVideoState";
+import useFullscreen from "../utils/useFullscreen";
+import useKeyboardShortcuts from "../utils/useKeyboradShortcuts";
 
 const VideoPlayer = ({ video }) => {
-  //console.log(video);
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(1);
 
-  useEffect(() => {
+  const toggleMute = () => {
     const videoElement = videoRef.current;
-
-    const handleTimeUpdate = () => {
-      setCurrentTime(videoElement.currentTime);
-    };
-
-    const handleLoadedMetadata = () => {
-      setDuration(videoElement.duration);
-    };
-
-    videoElement.addEventListener("timeupdate", handleTimeUpdate);
-    videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
-
-    return () => {
-      videoElement.removeEventListener("timeupdate", handleTimeUpdate);
-      videoElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (video) {
-      videoRef.current.src = video.sources;
-      setIsPlaying(false);
-    }
-  }, [video]);
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      switch (event.keyCode) {
-        case 32: 
-          handlePlayPause();
-          break;
-        case 70: 
-          toggleFullscreen();
-          break;
-        case 77: 
-          toggleMute();
-          break;
-        default:
-          break;
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  });
-
-  const handlePlayPause = () => {
-    const videoElement = videoRef.current;
-    if (isPlaying) {
-      videoElement.pause();
+    videoElement.muted = !isMuted;
+    setIsMuted(!isMuted);
+    if (isMuted) {
+      videoElement.volume = volume;
     } else {
-      videoElement.play();
+      videoElement.volume = 0;
     }
-    setIsPlaying(!isPlaying);
   };
+  
+  const {
+    isPlaying,
+    currentTime,
+    setCurrentTime,
+    duration,
+    playbackSpeed,
+    handlePlayPause,
+    handleSpeedChange,
+  } = useVideoState(videoRef, video);
+
+  const { isFullscreen, toggleFullscreen } = useFullscreen(videoRef);
+
+  useKeyboardShortcuts(handlePlayPause, toggleFullscreen, toggleMute);
 
   const handleSeek = (event) => {
     const videoElement = videoRef.current;
@@ -90,49 +51,19 @@ const VideoPlayer = ({ video }) => {
     }
   };
 
-  const handleSpeedChange = (event) => {
-    const speed = parseFloat(event.target.value);
-    setPlaybackSpeed(speed);
-    videoRef.current.playbackRate = speed;
-  };
-
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes < 10 ? "0" : ""}${minutes}:${
-      seconds < 10 ? "0" : ""
-    }${seconds}`;
-  };
-
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      videoRef.current.requestFullscreen().catch((err) => {
-        console.error("Failed to enter fullscreen mode:", err);
-      });
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen();
-      setIsFullscreen(false);
-    }
-  };
-
-  const toggleMute = () => {
-    const videoElement = videoRef.current;
-    videoElement.muted = !isMuted;
-    setIsMuted(!isMuted);
-    if (isMuted) {
-      videoElement.volume = volume;
-    } else {
-      videoElement.volume = 0;
-    }
-  };
-
   const handleVolumeChange = (event) => {
     const volume = parseFloat(event.target.value);
     setVolume(volume);
     videoRef.current.volume = volume;
     setIsMuted(volume === 0);
   };
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
 
   return (
     <div className="bg-slate-800 w-full">
@@ -203,7 +134,7 @@ const VideoPlayer = ({ video }) => {
       </div>
       <h1 className="text-center sm:text-left  text-2xl sm:mx-10 my-3 font-mono text-white font-semibold">{video.title} - {video.subtitle}</h1>
       <h3 className="text-center sm:text-left text-xl sm:mx-10 my-3 font-mono text-white font-semibold">Video Description</h3>
-      <p className="text-center  sm:text-left sm:mx-10 my-3 font-mono text-gray-400 font-semibold">{video.description}</p>
+      <p className="text-center mx-3  sm:text-left sm:mx-10 my-3 font-mono text-gray-400 font-semibold">{video.description}</p>
     </div>
   );
 };
