@@ -5,7 +5,7 @@ import Playlist from "./components/Playlist";
 import videos from "./utils/videoData";
 
 function App() {
-  const [currentVideo, setCurrentVideo] = useState(videos[1]);
+  const [currentVideo, setCurrentVideo] = useState(videos[0]);
   //console.log(videos);
 
   return (
