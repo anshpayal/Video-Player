@@ -66,7 +66,7 @@ const VideoPlayer = ({ video }) => {
 
 
   return (
-    <div className="bg-slate-800 w-full">
+    <div className="bg-slate-800 border-t-2 border-slate-900 w-full">
       <h1 className="text-white text-xl sm:text-2xl font-semibold mx-5 sm:mx-10 my-5 font-mono">Now Playing</h1>
       <div className="relative w-11/12 mx-auto sm:w-9/12 sm:mx-10 my-4">
         {!isPlaying && (
@@ -111,7 +111,7 @@ const VideoPlayer = ({ video }) => {
             value={(currentTime / duration) * 100 || 0}
             onChange={handleSeek}
           />
-          <div className="text-white text-[11px] font-semibold w-44 mx-1 sm:text-lg  sm:mx-4 text-center ">{`${formatTime(
+          <div className="text-white text-[11px] font-semibold w-44 mx-1 sm:text-[16px]  sm:mx-4 text-center ">{`${formatTime(
             currentTime
           )} / ${formatTime(duration)}`}</div>
           <select
